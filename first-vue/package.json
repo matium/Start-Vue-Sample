@@ -1,0 +1,14 @@
+{
+  "name": "first-vue",
+  "version": "1.0.0",
+  "description": "はじめてのVueサンプル",
+  "main": "main.js",
+  "scripts": {
+    "start": "browser-sync start --config bs-config.js"
+  },
+  "author": "Keita Watanabe",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}
