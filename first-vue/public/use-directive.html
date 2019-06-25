@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>はじめてのVue.js</title>
+  <!-- Vue.jsの読み込み -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>
+      {{ nyanMessage }}
+    </p>
+    <div>
+      <input type="text" v-model="message" />
+    </div>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello, World!'
+      },
+      computed: {
+        // 算出プロパティnyanMessageを定義
+        nyanMessage: function () {
+          // this経由でインスタンスのデータにアクセスできる
+          return this.message + 'ニャン!!';
+        }
+      }
+    });
+    
+    vm.$data.message = '我輩は猫である';
+  </script>
+</body>
+</html>

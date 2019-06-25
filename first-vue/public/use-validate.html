@@ -10,11 +10,9 @@
     <p>
       {{ nyanMessage }}
     </p>
-    <p v-show="emptyError" v-bind:style="errorMessageStyle" >
-      ※最低1文字は入力してください
-    </p>
+    <p v-show="emptyError">※最低1文字は入力してください</p>
     <div>
-      <input type="text" v-bind:style="errorInputStyle" v-model="message" v-on:input="checkEmptyMessage" />
+      <input  type="text" v-model="message" v-on:input="checkEmptyMessage" />
     </div>
   </div>
   <script>
@@ -29,29 +27,16 @@
         nyanMessage: function () {
           // this経由でインスタンスのデータにアクセスできる
           return this.message + 'ニャン!!';
-        },
-        // エラーのときのテキストスタイル
-        errorMessageStyle: function () {
-          return {
-            color: this.emptyError ? 'red' : ''
-          };
-        },
-        // エラーのときの入力フォームのスタイル
-        errorInputStyle: function () {
-          return {
-            border: this.emptyError ? '1px solid red' : ''
-          };
         }
       },
       methods: {
         // メソッドcheckEmptyMessageを定義
         checkEmptyMessage: function (event) {
           this.emptyError = this.message === '';
-          console.log(this.emptyError);
         }
       }
     });
-
+    
     vm.$data.message = '我輩は猫である';
   </script>
 </body>

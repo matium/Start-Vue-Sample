@@ -1,0 +1,14 @@
+{
+  "name": "vue-ytplayer-app",
+  "version": "1.0.0",
+  "description": "Vue.js used YouTube Embed Player app.",
+  "main": "main.js",
+  "scripts": {
+    "start": "browser-sync start --config bs-config.js"
+  },
+  "author": "Keita Watanabe",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}

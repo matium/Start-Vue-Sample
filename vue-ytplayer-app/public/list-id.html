@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>Vue.jsでもう少しアプリっぽいものを作ってみる</title>
+  <!-- Vue.jsの読み込み -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- YouTube APIの読み込み-->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- CSS -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #222;
+    }
+    #app {
+      color: #fff;
+      padding: 20px;
+    }
+    #yt-player {
+      width: 800px;
+      margin-bottom: 20px;
+    }
+    #input-ui {
+      width: 800px;
+      height: 24px;
+    }
+    #input-ui input[type=text] {
+      display: inline-block;
+      width: 500px;
+      font-size: 11.5pt;
+      line-height: 2em;
+      padding: 0.5em 0.3em 0.5em 0.4em;
+      margin-right: 1em;
+    }
+    #input-ui button {
+      display: inline-block;
+      padding: 0.6em 1em 0.6em 1em;
+      font-size: 11.5pt;
+      line-height: 2em;
+      text-align: center;
+      border-style: none;
+      background-color: #ffee00;
+      border-radius: 5px;
+    }
+    .button-list {
+      padding-inline-start: 0;
+    }
+    .button-list li {
+      display: inline-block;
+      list-style: none;
+      margin-right: 1em;
+    }
+    .button-list li a {
+      display: block;
+      color: #fff;
+      background-color: #6a47f1;
+      font-size: 10pt;
+      padding: 0.6em 1em 0.6em 1em;
+      text-align: center;
+      cursor: pointer;
+    }
+    .button-list li a.selected {
+      background-color: #c6a1ff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="yt-player"></div>
+    <ul class="button-list">
+      <li v-for="(videoId, index) in videos" v-bind:key="index">
+        <a
+          class="video-switch-button"
+          :class="currentVideo === index? 'selected': ''"
+          @click="setNewVideo(index)"
+        >
+          {{videoId}}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <script>
+    let ytPlayer;
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('yt-player', {
+        height: '450',
+        width: '800',
+        videoId: vm.videos[0],
+        playerVars: {
+          rel: 0,
+          enablejsapi: 1,
+        },
+        events: {
+          'onError': onYtPlayerError
+        }
+      });
+    }
+
+    onYtPlayerError = (error) => {
+      console.log(error);
+    }
+    
+    const videos = ['1wBP_MzmqFw', 'f-mKBpNsuCU', 'yle6mFfUpow', '_WJ072_N12Y', 'Hz-ok0YhPd0','fuCzjM1gAuM'];
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        videos: videos,
+        currentVideo: 0,
+      },
+      methods: {
+        setNewVideo: function(video_index) {
+          ytPlayer.cueVideoById(this.videos[video_index], 0, 'hd720');
+          this.currentVideo = video_index;
+        }
+      },
+    });
+  </script>
+</body>
+</html>

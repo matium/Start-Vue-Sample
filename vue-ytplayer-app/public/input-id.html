@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>Vue.jsでもう少しアプリっぽいものを作ってみる</title>
+  <!-- Vue.jsの読み込み -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- YouTube APIの読み込み-->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- CSS -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #222;
+    }
+    #app {
+      color: #fff;
+      padding: 20px;
+    }
+    #yt-player {
+      width: 800px;
+      margin-bottom: 20px;
+    }
+    #input-ui {
+      width: 800px;
+      height: 24px;
+    }
+    #input-ui input[type=text] {
+      display: inline-block;
+      width: 500px;
+      font-size: 11.5pt;
+      line-height: 2em;
+      padding: 0.5em 0.3em 0.5em 0.4em;
+      margin-right: 1em;
+    }
+    #input-ui button {
+      display: inline-block;
+      padding: 0.6em 1em 0.6em 1em;
+      font-size: 11.5pt;
+      line-height: 2em;
+      text-align: center;
+      border-style: none;
+      background-color: #ffee00;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="yt-player"></div>
+    <div id="input-ui">
+      <input type="text" v-model="videoId" />
+      <button @click="setNewVideoId()">このIDのビデオを表示</button>
+    </div>
+  </div>
+  <script>
+    let ytPlayer;
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('yt-player', {
+        height: '450',
+        width: '800',
+        videoId: vm.videoId,
+        playerVars: {
+          rel: 0,
+          enablejsapi: 1,
+        },
+        events: {
+          'onError': onYtPlayerError
+        }
+      });
+    }
+
+    onYtPlayerError = (error) => {
+      console.log(error);
+    }
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        videoId: 'fuCzjM1gAuM'
+      },
+      methods: {
+        setNewVideoId: function() {
+          ytPlayer.cueVideoById(this.videoId, 0, 'hd720');
+        }
+      },
+    });
+  </script>
+</body>
+</html>
